@@ -13,8 +13,17 @@
      http://www.springframework.org/schema/task
      http://www.springframework.org/schema/task/spring-task-4.1.xsd
      http://www.springframework.org/schema/cache 
-     http://www.springframework.org/schema/cache/spring-cache.xsd">	
+     http://www.springframework.org/schema/cache/spring-cache.xsd">
+    
+    <context:component-scan base-package="service" />
+    <context:component-scan base-package="controller" />
+    <context:component-scan base-package="security" />
+    
 	<import resource="classpath:config/tiles-config.xml" />
+	<import resource="classpath:config/util.xml" />
+	<import resource="classpath:config/mail-config.xml" />
+	<import resource="classpath:config/spring-security.xml" />
+	<import resource="classpath:config/spring-data-hibernate-repositories.xml" />
 
 	
 </beans>
