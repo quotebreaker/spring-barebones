@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import enums.SocialMediaService;
 import enums.UserRole;
 
 
@@ -42,6 +43,10 @@ public class AuthUser extends BaseData {
 
     private boolean enabled = true;
 
+//    private boolean autoCreated = false;
+//    
+//    List<SocialUserProfile> socialProfiles = new ArrayList<SocialUserProfile>();
+//    
     public AuthUser() {
     }
     

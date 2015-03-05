@@ -12,7 +12,6 @@
 	<mvc:annotation-driven />   
 	
 	<import resource="classpath:config/applicationContext.xml" />
-	<context:component-scan base-package="controller" />	
 	<mvc:resources mapping="/static/**" location="/static/"/>
 	
 

@@ -12,6 +12,6 @@ public class IndexController {
 	public String index(ModelMap model){
 		model.addAttribute("message","hello world");
 		return "index";
-	}
+	}	
 
 }

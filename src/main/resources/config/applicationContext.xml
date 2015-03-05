@@ -24,6 +24,7 @@
 	<import resource="classpath:config/mail-config.xml" />
 	<import resource="classpath:config/spring-security.xml" />
 	<import resource="classpath:config/spring-data-hibernate-repositories.xml" />
+	<import resource="classpath:config/spring-social.xml" />
 
 	
 </beans>
