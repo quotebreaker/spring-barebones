@@ -56,7 +56,8 @@
                         </div>                     
                     </div>
                     
-                    <div>
+                    <div class="row">
+                    	<div class="col-md-6">
         <form action="/signin/facebook" method="POST">
 			<input type="hidden" name="scope" value="email,public_profile,user_friends" />
 			<div class="formInfo">
@@ -64,6 +65,16 @@
 			</div>
 			<p><input type="image" src="http://i.stack.imgur.com/ZW4QC.png" type="submit"></input></p>
 		</form>
+		</div>
+		<div class="col-md-6">
+		<form action="/signin/linkedin" method="POST">
+			<input type="hidden" name="scope" value="email,public_profile,user_friends" />
+			<div class="formInfo">
+				<p>Click the button to connect this application with your Linkedin account.</p>
+			</div>
+			<p><input type="image" src="https://snap.licdn.com/microsites/content/dam/developer/global/en_US/site/img/signin-button.png" type="submit"></input></p>
+		</form>		
+		</div>
         </div>  
         </div>
         

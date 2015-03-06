@@ -1,6 +1,7 @@
 package pojo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,13 +15,18 @@ import javax.persistence.JoinTable;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import enums.SocialMediaService;
 import enums.UserRole;
 
 
 @Entity
 @Table(name="auth_user")
-public class AuthUser extends BaseData {
+public class AuthUser extends BaseData implements UserDetails {
+
+    private static final long serialVersionUID = 8728659410248704423L;
 
     private String password;
 
@@ -44,9 +50,7 @@ public class AuthUser extends BaseData {
     private boolean enabled = true;
 
 //    private boolean autoCreated = false;
-//    
-//    List<SocialUserProfile> socialProfiles = new ArrayList<SocialUserProfile>();
-//    
+    
     public AuthUser() {
     }
     
@@ -133,6 +137,16 @@ public class AuthUser extends BaseData {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {        
+        return getRoles();
+    }
+
+    @Override
+    public String getUsername() {
+        return getUserName();
     }
 
 }
