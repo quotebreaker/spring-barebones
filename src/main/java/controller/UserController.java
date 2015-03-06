@@ -16,12 +16,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.UserProfile;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import pojo.AuthUser;
 import service.EmailService;
@@ -44,8 +49,10 @@ public class UserController {
 	
     @Autowired
     @Qualifier("authenticationManager")
-    protected AuthenticationManager authenticationManager;	
-	
+    protected AuthenticationManager authenticationManager;
+    
+    ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
+    	
     @RequestMapping(value = "/register", method = { RequestMethod.POST, RequestMethod.GET })
     public String register(@ModelAttribute AuthUser user, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException {
         String ret = "user/register";
@@ -53,13 +60,16 @@ public class UserController {
             List<UserRole> roles = new ArrayList<UserRole>();
             roles.add(UserRole.ROLE_USER);
             try{
-            	userService.createUser(user, roles);
-                boolean loginSuccess = authenticateUserAndSetSession(user, request);
+            	AuthUser authUser = userService.createUser(user, roles);
+            	
+            	RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+                providerSignInUtils.doPostSignUp(authUser.getId().toString(), requestAttributes);
+                boolean loginSuccess = authenticateUserAndSetSession(authUser, request);
 
                 if (loginSuccess) {
                     try {
                         authenticationSuccessHandler.onAuthenticationSuccess(request, response, SecurityContextHolder.getContext().getAuthentication());
-                        emailService.sendUserSignupEmail(user);
+                        emailService.sendUserSignupEmail(authUser);
                     } catch (ServletException e) {
                         loginSuccess = false;
                     }
@@ -95,4 +105,20 @@ public class UserController {
         return "user/login";
     }
 
+    @RequestMapping(value = "/choosepassword", method = { RequestMethod.POST, RequestMethod.GET })
+    public String choosePassword(@RequestParam(value = "error", required = false) boolean error, HttpServletRequest request, ModelMap model) {
+        if (request.getMethod().equals(RequestMethod.POST.toString())) {
+            return "forward:/user/register";
+        } else {
+            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            Connection<?> connection = providerSignInUtils.getConnectionFromSession(requestAttributes);
+            UserProfile profile = connection.fetchUserProfile();
+            model.addAttribute("name", profile.getName());
+            model.addAttribute("image", connection.getImageUrl());
+            model.addAttribute("email", profile.getEmail());
+            return "user/choosepassword";    
+        }
+        
+    }
+    
 }

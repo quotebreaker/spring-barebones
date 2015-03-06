@@ -3,7 +3,7 @@
 <c:if test="${param.error == 'true'}">
 	<div class="alert alert-danger"><strong>Sorry!</strong> Incorrect Username or Password</div>					
 </c:if> 
-    <div class="container">    
+    <div class="container">    	   
         <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
             <div class="panel panel-info" >
                     <div class="panel-heading">
@@ -54,8 +54,20 @@
                             </form>    
 
                         </div>                     
-                    </div>  
+                    </div>
+                    
+                    <div>
+        <form action="/signin/facebook" method="POST">
+			<input type="hidden" name="scope" value="email,public_profile,user_friends" />
+			<div class="formInfo">
+				<p>Click the button to connect this application with your Facebook account.</p>
+			</div>
+			<p><input type="image" src="http://i.stack.imgur.com/ZW4QC.png" type="submit"></input></p>
+		</form>
+        </div>  
         </div>
+        
+        
     </div>
     
  

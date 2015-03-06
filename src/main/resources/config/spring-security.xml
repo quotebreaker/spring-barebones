@@ -21,6 +21,7 @@
 	    <security:intercept-url pattern="/" access="permitAll" />	    
 		<security:intercept-url pattern="/user/login" access="permitAll" />				
 		<security:intercept-url pattern="/user/register" access="permitAll" />
+		<security:intercept-url pattern="/user/choosepassword" access="permitAll" />
 		<security:intercept-url pattern="/user/auth/forgotpassword" access="permitAll" />
 		<security:intercept-url pattern="/connect/**" access="permitAll" />
 		<security:intercept-url pattern="/signin/**" access="permitAll" />				
@@ -38,8 +39,7 @@
 	</bean>
 	
 	<!-- Declare an authentication-manager to use a custom userDetailsService -->
-	<security:authentication-manager alias="authenticationManager">
-		<!-- <security:authentication-provider user-service-ref="customSocialUserDetailsService"/> -->
+	<security:authentication-manager alias="authenticationManager">		
 		<security:authentication-provider user-service-ref="customUserDetailsService">
 			<security:password-encoder ref="passwordEncoder" />
 		</security:authentication-provider>

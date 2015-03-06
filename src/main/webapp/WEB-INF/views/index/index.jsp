@@ -1,16 +1,23 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authorize var="loggedIn" access="isAuthenticated()" />
+
 <html>
 	<head>
 		<title>Hello Facebook</title>
 	</head>
 	<body>
-		<h3>Connect to Facebook</h3>
+	
+		<c:if test="${loggedIn}">
+		 You are now logged in. 
+		 
+		 <br><br>
+		 
+		 <a class="btn btn-primary btn-lg" href="/user/logout">Logout</a>
+		</c:if>
 		
-		<form action="/connect/facebook" method="POST">
-			<input type="hidden" name="scope" value="read_stream" />
-			<div class="formInfo">
-				<p>You aren't connected to Facebook yet. Click the button to connect this application with your Facebook account.</p>
-			</div>
-			<p><button type="submit">Connect to Facebook</button></p>
-		</form>
+		<c:if test="${!loggedIn}">		
+		<a class="btn btn-primary btn-lg" href="/user/login">Login</a>
+		</c:if>
 	</body>
 </html>

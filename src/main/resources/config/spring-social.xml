@@ -16,4 +16,13 @@
 	<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText" />
 	<bean class="org.springframework.social.connect.web.ConnectController"/>
 	
+	
+	<bean name="providerSignInController" class="org.springframework.social.connect.web.ProviderSignInController" autowire="constructor">
+		<property name="signUpUrl" value="/user/choosepassword"/>
+		<property name="signInUrl" value="/user/login"/>		
+	</bean>
+	
+	<bean id="signInAdapter" class="security.SocialSigninAdapter" autowire="constructor" /> 
+	
+	
 </beans>
