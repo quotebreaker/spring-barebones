@@ -48,7 +48,7 @@
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>	
 	
 	<bean id="customUserDetailsService" class="security.CustomUserDetailsService"/>
-	<bean id="customSocialUserDetailsService" class="security.CustomSocialUserDetailsService"/>
-	
+<!-- 	<bean id="customSocialUserDetailsService" class="security.CustomSocialUserDetailsService"/>
+ -->	
 
 </beans>

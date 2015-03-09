@@ -106,7 +106,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/choosepassword", method = { RequestMethod.POST, RequestMethod.GET })
-    public String choosePassword(@RequestParam(value = "error", required = false) boolean error, HttpServletRequest request, ModelMap model) {
+    public String choosePassword(@RequestParam(value = "error", required = false) boolean error, HttpServletRequest request, ModelMap model) {        
         if (request.getMethod().equals(RequestMethod.POST.toString())) {
             return "forward:/user/register";
         } else {

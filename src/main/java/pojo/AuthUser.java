@@ -17,6 +17,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.social.security.SocialUserDetails;
 
 import enums.SocialMediaService;
 import enums.UserRole;
@@ -24,7 +25,7 @@ import enums.UserRole;
 
 @Entity
 @Table(name="auth_user")
-public class AuthUser extends BaseData implements UserDetails {
+public class AuthUser extends BaseData implements SocialUserDetails {
 
     private static final long serialVersionUID = 8728659410248704423L;
 
@@ -38,6 +39,8 @@ public class AuthUser extends BaseData implements UserDetails {
 
 	private String fullName;
 	
+	private String imageUrl;
+	
 	@ElementCollection(fetch=FetchType.EAGER)
 	List<UserRole> roles = new ArrayList<UserRole>();
 
@@ -49,7 +52,7 @@ public class AuthUser extends BaseData implements UserDetails {
 
     private boolean enabled = true;
 
-//    private boolean autoCreated = false;
+    private boolean autoCreated = false;
     
     public AuthUser() {
     }
@@ -59,13 +62,14 @@ public class AuthUser extends BaseData implements UserDetails {
     	email = user.getEmail();
         password = user.getPassword();
         userName = user.getEmail();
+        imageUrl = user.getImageUrl();
         roles.addAll(user.getRoles());
         accountNonExpired = user.isAccountNonExpired();
         accountNonLocked = user.isAccountNonLocked();
         credentialsNonExpired = user.isCredentialsNonExpired();
         enabled = user.isEnabled();     
-    }
-    
+        this.autoCreated = user.isAutoCreated();
+    }    
 
     public String getEmail() {
         return email;
@@ -91,6 +95,14 @@ public class AuthUser extends BaseData implements UserDetails {
         this.fullName = fullName;
     }
     
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -139,6 +151,14 @@ public class AuthUser extends BaseData implements UserDetails {
         this.enabled = enabled;
     }
 
+    public boolean isAutoCreated() {
+        return autoCreated;
+    }
+
+    public void setAutoCreated(boolean autoCreated) {
+        this.autoCreated = autoCreated;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {        
         return getRoles();
@@ -149,4 +169,14 @@ public class AuthUser extends BaseData implements UserDetails {
         return getUserName();
     }
 
+    @Override
+    public String getUserId() {
+        return getUserName();
+    }
+
+    
+    public static void builder() {
+        
+    }
+    
 }

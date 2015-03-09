@@ -9,7 +9,8 @@
 	<body>
 	
 		<c:if test="${loggedIn}">
-		 You are now logged in. 
+		 
+		 ${authUser.fullName} You are now logged in.  
 		 
 		 <br><br>
 		 
