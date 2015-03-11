@@ -2,8 +2,10 @@ package pojo;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,11 +15,15 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.social.security.SocialUserDetails;
+import org.springframework.util.CollectionUtils;
+
+import com.google.gson.Gson;
 
 import enums.SocialMediaService;
 import enums.UserRole;
@@ -38,37 +44,28 @@ public class AuthUser extends BaseData implements SocialUserDetails {
     private String userName;
 
 	private String fullName;
-	
-	private String imageUrl;
-	
+		
 	@ElementCollection(fetch=FetchType.EAGER)
 	List<UserRole> roles = new ArrayList<UserRole>();
 
-    private boolean accountNonExpired = false;
+    private boolean accountNonExpired = true;
 
-    private boolean accountNonLocked = false;
+    private boolean accountNonLocked = true;
 
-    private boolean credentialsNonExpired = false;
+    private boolean credentialsNonExpired = true;
 
     private boolean enabled = true;
 
     private boolean autoCreated = false;
     
-    public AuthUser() {
-    }
+    private String imageUrl;
     
-    public AuthUser(AuthUser user) {
-    	fullName = user.getFullName();
-    	email = user.getEmail();
-        password = user.getPassword();
-        userName = user.getEmail();
-        imageUrl = user.getImageUrl();
-        roles.addAll(user.getRoles());
-        accountNonExpired = user.isAccountNonExpired();
-        accountNonLocked = user.isAccountNonLocked();
-        credentialsNonExpired = user.isCredentialsNonExpired();
-        enabled = user.isEnabled();     
-        this.autoCreated = user.isAutoCreated();
+    private String socialProfile;
+    
+    @Transient
+    private SocialProfileData socialProfileData;
+
+    public AuthUser() {
     }    
 
     public String getEmail() {
@@ -159,6 +156,23 @@ public class AuthUser extends BaseData implements SocialUserDetails {
         this.autoCreated = autoCreated;
     }
 
+    public String getSocialProfile() {
+        return socialProfile;
+    }
+
+    public void setSocialProfile(String socialProfile) {
+        this.socialProfile = socialProfile;
+        Gson json = new Gson();
+        this.socialProfileData =json.fromJson(socialProfile, SocialProfileData.class);
+    }
+
+    public void setSocialProfileData(SocialProfileData socialProfileData) {
+        this.socialProfileData = socialProfileData;
+        Gson json = new Gson();
+        String socialProfileJson = json.toJson(socialProfileData);
+        this.setSocialProfile(socialProfileJson);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {        
         return getRoles();
@@ -173,9 +187,29 @@ public class AuthUser extends BaseData implements SocialUserDetails {
     public String getUserId() {
         return getUserName();
     }
-
     
-    public static void builder() {
+    public class SocialProfileData {
+        
+        private Map<String, SocialProfile> data;
+
+        public Map<String, SocialProfile> getData() {
+            return data;
+        }
+
+        public void setData(Map<String, SocialProfile> data) {
+            this.data = data;
+        }
+        
+        public SocialProfile get(String provider) {
+            return data.get(provider);            
+        }
+        
+        public SocialProfile add(String provider, SocialProfile profile) {
+            if (CollectionUtils.isEmpty(data)) {
+                data = new HashMap<String, SocialProfile>();
+            }
+            return data.put(provider, profile);         
+        }
         
     }
     

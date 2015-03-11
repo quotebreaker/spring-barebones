@@ -18,11 +18,29 @@ import pojo.AuthUser;
 @Controller
 public abstract class BaseController {
     
-    @ModelAttribute("qbUser")
+    @ModelAttribute("authUser")
     protected AuthUser getAuthUser() {
+        AuthUser authUser = null;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        AuthUser authUser = (AuthUser) auth.getPrincipal();         
+        if(!auth.getName().equalsIgnoreCase("anonymousUser")) {
+            authUser = (AuthUser) auth.getPrincipal();
+        }
         return authUser;
+    }
+        
+    protected boolean isUserLoggedIn() {
+        boolean ret = false;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth != null && !auth.getName().equalsIgnoreCase("anonymousUser")) {
+            ret = true;
+        }
+        return ret;
+    }
+    
+    
+    protected Authentication getAuthentication() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth;
     }
     
 }

@@ -16,7 +16,7 @@ public class IndexController extends BaseController {
 	
 	@RequestMapping("/")
 	public String index(ModelMap model, Principal principal){	   
-	    AuthUser authUser = getAuthUser();	    
+//	    AuthUser authUser = getAuthUser();	    
 		model.addAttribute("message","hello world");
 		return "index";
 	}	

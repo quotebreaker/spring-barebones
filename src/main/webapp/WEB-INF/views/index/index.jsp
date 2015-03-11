@@ -10,8 +10,8 @@
 	
 		<c:if test="${loggedIn}">
 		 
-		 ${authUser.fullName} You are now logged in.  
-		 
+		 <img style="border-radius:25px" src="${authUser.imageUrl}"></img>
+		 ${authUser.fullName} You are now logged in.
 		 <br><br>
 		 
 		 <a class="btn btn-primary btn-lg" href="/user/logout">Logout</a>

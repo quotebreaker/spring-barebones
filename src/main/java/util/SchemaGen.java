@@ -25,7 +25,7 @@ public class SchemaGen {
     public void testGenerateSchema() {
     	Configuration configuration = sessionFactory.getConfiguration();
         configuration.setNamingStrategy(ImprovedNamingStrategy.INSTANCE);
-        boolean newSchema = true;
+        boolean newSchema = false;
         boolean dumpToDb = true;
         if (newSchema) {
             SchemaExport export = new SchemaExport(configuration);
