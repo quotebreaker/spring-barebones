@@ -18,7 +18,7 @@ import pojo.AuthUser;
 @Controller
 public abstract class BaseController {
     
-    @ModelAttribute("authUser")
+    @ModelAttribute("user")
     protected AuthUser getAuthUser() {
         AuthUser authUser = null;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

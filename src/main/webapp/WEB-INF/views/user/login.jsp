@@ -68,7 +68,7 @@
 		</div>
 		<div class="col-md-6">
 		<form action="/signin/linkedin" method="POST">
-			<input type="hidden" name="scope" value="email,public_profile,user_friends" />
+			<!-- <input type="hidden" name="scope" value="email,public_profile,user_friends" /> -->
 			<div class="formInfo">
 				<p>Click the button to connect this application with your Linkedin account.</p>
 			</div>

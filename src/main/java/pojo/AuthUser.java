@@ -172,6 +172,13 @@ public class AuthUser extends BaseData implements SocialUserDetails {
         String socialProfileJson = json.toJson(socialProfileData);
         this.setSocialProfile(socialProfileJson);
     }
+    
+    public SocialProfileData getSocialProfileData(boolean create) {
+        if(socialProfileData == null && create) {
+            socialProfileData = new SocialProfileData();
+        }
+        return socialProfileData;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {        

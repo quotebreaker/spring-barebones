@@ -108,7 +108,7 @@ public class UserController extends BaseController {
                 userService.handleUserRegistration(authUser, request, response);
             } else {
                 providerSignInUtils.doPostSignUp(authUser.getId().toString(), requestAttributes);
-                
+                userService.linkProviderToAuthUser(authUser, connection, profile);
                 if(isUserLoggedIn()) {
                     // Existing user
                     // TODO: Handle existing session
@@ -119,6 +119,6 @@ public class UserController extends BaseController {
                     authenticationSuccessHandler.onAuthenticationSuccess(request, response, getAuthentication());                    
                 }                
             }
-            return null;            
+            return "";            
     }
 }

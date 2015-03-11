@@ -97,7 +97,7 @@ public class UserService {
     }
     
     public AuthUser findAuthUser(UserProfile profile) {
-        String email = profile.getUsername();
+        String email = profile.getEmail();
         AuthUser authUser = findAuthUser(email);
         return authUser;
     }
@@ -117,6 +117,20 @@ public class UserService {
     
     public String getHashedPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    @Transactional
+    public void linkProviderToAuthUser(AuthUser authUser, Connection<?> connection, UserProfile profile) {
+        if(StringUtils.isNotEmpty(connection.getImageUrl())) {
+            authUser.setImageUrl(connection.getImageUrl());    
+        }        
+        SocialProfileData data = authUser.getSocialProfileData(true);
+        SocialProfile sp = new SocialProfile(connection.getKey().getProviderId(), connection.getKey().getProviderUserId());
+        data.add(connection.getKey().getProviderId(), sp);
+        authUser.setSocialProfileData(data);
+        authUserRepository.saveAndFlush(authUser);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authUser, authUser.getPassword(),authUser.getAuthorities());        
+        SecurityContextHolder.getContext().setAuthentication(token);
     }
 
 }
