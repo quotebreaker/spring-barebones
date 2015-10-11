@@ -8,7 +8,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<skip.tests>true</skip.tests>
 		<env>development</env>
-		<spring-version>4.1.1.RELEASE</spring-version>
+		<spring-version>4.2.1.RELEASE</spring-version>
 		<spring-data-jpa-version>1.7.1.RELEASE</spring-data-jpa-version>
 		<spring-security-version>3.2.5.RELEASE</spring-security-version>
 		<junit-version>4.11</junit-version>
