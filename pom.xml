@@ -13,8 +13,8 @@
 		<spring-security-version>3.2.5.RELEASE</spring-security-version>
 		<junit-version>4.11</junit-version>
 		<jstl-version>1.2</jstl-version>
-		<servlet-api-version>2.5</servlet-api-version>
-		<jetty-version>8.1.14.v20131031</jetty-version>
+		<servlet-api-version>2.5</servlet-api-version>		
+		<jetty-version>9.2.14.v20151106</jetty-version>		
 		<jersey-version>1.17.1</jersey-version>
 		<jetty-stop-port>9999</jetty-stop-port>
 		<tiles-version>3.0.1</tiles-version>
@@ -37,7 +37,7 @@
 			<plugins>
 			  <plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
+				<version>2.6</version>
 				<configuration>
 				  <outputDirectory>deployments</outputDirectory>
 				  <warName>ROOT</warName>
@@ -248,6 +248,11 @@
 		    <groupId>com.google.code.gson</groupId>
 		    <artifactId>gson</artifactId>
 		    <version>2.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+			<version>9.2.13.v20150730</version>
 		</dependency>
 	</dependencies>
 </project>
